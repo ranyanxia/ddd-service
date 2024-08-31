@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.yanxia.ddd_service.model.Event;
 import io.yanxia.ddd_service.service.EventService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +22,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/events")
+@Api(tags = "Events API")
 public class EventController {
     @Autowired
     private EventService eventService;
 
+    @ApiOperation(value = "Get All Events", notes = "Return a list of all events")
     @GetMapping
     public List<Event> getAllEvents() {
         log.info("get all events");
         return eventService.getAllEvents();
     }
 
+    @ApiOperation(value = "Get Event by ID", notes = "Return an event by given ID")
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id) {
         log.info("query event by id: {}", id);
